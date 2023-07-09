@@ -1,6 +1,5 @@
 import express, { Request, Response, Router } from "express";
 
-// export const producstRouter = Router
 export const producstRouter = express.Router();
 
 const products = [
