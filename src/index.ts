@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import "dotenv/config";
 import bodyParser from "body-parser";
 import { producstRouter } from "./routers/products-router";
@@ -6,7 +6,17 @@ import { addressesRouter } from "./routers/addresses-router";
 
 export const app = express();
 
+
+const exampleMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    // @ts-ignore
+    res.exampleMiddleware = "Example Middleware Work";
+    next();
+  };
+  
+
 app.use(bodyParser.json());
+app.use(exampleMiddleware);
+
 app.use('/products', producstRouter)
 app.use("/addresses", addressesRouter);
 

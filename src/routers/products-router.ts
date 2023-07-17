@@ -1,4 +1,4 @@
-import express, { Request, Response, Router } from "express";
+import express, { Request, Response, Router, NextFunction } from "express";
 
 export const producstRouter = express.Router();
 
@@ -18,9 +18,17 @@ const db = {
   ],
 };
 
-producstRouter.get("/", (req: Request, res: Response) => {
-  res.send(db.products);
-});
+
+producstRouter.get(
+  "/",
+  (req: Request, res: Response, next: NextFunction) => {
+    // @ts-ignore
+    const exampleMiddleware = res.exampleMiddleware;
+    res.send({ value: exampleMiddleware + "!!!" });
+
+    // res.send(db.products);
+  }
+);
 
 producstRouter.post("/", (req: Request, res: Response) => {
   const newProduct = { id: Number(new Date()), title: req.body.title };
@@ -31,9 +39,7 @@ producstRouter.post("/", (req: Request, res: Response) => {
 
 producstRouter.get("/:id", (req: Request, res: Response) => {
   const id = Number(req.params.id);
-  const product = db.products.find(
-    (product) => product.id === id
-  );
+  const product = db.products.find((product) => product.id === id);
 
   if (!product) {
     res.send(404);
