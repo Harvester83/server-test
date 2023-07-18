@@ -1,4 +1,5 @@
 import express, { Request, Response, Router, NextFunction } from "express";
+import { requestCounter } from "../";
 
 export const producstRouter = express.Router();
 
@@ -18,17 +19,12 @@ const db = {
   ],
 };
 
-
-producstRouter.get(
-  "/",
-  (req: Request, res: Response, next: NextFunction) => {
-    // @ts-ignore
-    const exampleMiddleware = res.exampleMiddleware;
-    res.send({ value: exampleMiddleware + "!!!" });
-
-    // res.send(db.products);
-  }
-);
+producstRouter.get("/", (req: Request, res: Response) => {
+  // @ts-ignore
+  const exampleMiddleware = res.exampleMiddleware;
+  res.send({ value: exampleMiddleware + "! Products: " + requestCounter });
+  // res.send(db.products);
+});
 
 producstRouter.post("/", (req: Request, res: Response) => {
   const newProduct = { id: Number(new Date()), title: req.body.title };
