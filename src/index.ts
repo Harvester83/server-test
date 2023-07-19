@@ -37,7 +37,7 @@ const requestCounterMiddleware = (
 app.use(bodyParser.json());
 app.use(requestCounterMiddleware);
 app.use(exampleMiddleware);
-app.use(authGuradMiddleware);
+//app.use(authGuradMiddleware);
 
 app.use("/products", producstRouter);
 app.use("/addresses", addressesRouter);
